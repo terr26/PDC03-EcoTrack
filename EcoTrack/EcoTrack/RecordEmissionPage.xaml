@@ -3,40 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EcoTrack.RecordEmissionPage">
 
-    <ScrollView>
-        <StackLayout Padding="20">
-            <!-- Action Code is auto-generated -->
-            <Entry x:Name="actionCodeEntry" Placeholder="Action Code" IsEnabled="False" />
-            <Entry x:Name="descriptionEntry" Placeholder="Description" />
-
-            <!-- Picker for Category -->
-            <Picker x:Name="categoryPicker" Title="Category">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Public Transport</x:String>
-                        <x:String>Carpooling</x:String>
-                        <x:String>Electric Vehicles</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-
-            <!-- Picker for Frequency -->
-            <Picker x:Name="frequencyPicker" Title="Frequency">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Daily</x:String>
-                        <x:String>Weekly</x:String>
-                        <x:String>Monthly</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-
-            <Entry x:Name="impactLevelEntry" Placeholder="Impact Level" />
-            <Button Text="Save" Clicked="OnSaveButtonClicked" />
-
-            <!-- Display the saved input values below the save button -->
-            <StackLayout x:Name="savedInputsLayout" Padding="20" />
+    <StackLayout Padding="20" BackgroundColor="#002b36">
+        <!-- Header Section -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
+            <StackLayout Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Center" Padding="10,0">
+                <Label Text="Record Emission" TextColor="White" FontSize="24" />
+            </StackLayout>
         </StackLayout>
-    </ScrollView>
+
+        <ScrollView>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <!-- Form Fields -->
+                <StackLayout HorizontalOptions="FillAndExpand" Padding="20">
+                    <Entry x:Name="actionCodeEntry" Placeholder="Action Code" IsVisible="False" />
+                    <Entry x:Name="descriptionEntry" Placeholder="Description" FontSize="16" TextColor="Black" BackgroundColor="White" HorizontalOptions="FillAndExpand" />
+                    <Picker x:Name="categoryPicker" Title="Category" FontSize="16" TextColor="Black" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Public Transport</x:String>
+                                <x:String>Carpooling</x:String>
+                                <x:String>Electric Vehicles</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Entry x:Name="impactLevelEntry" Placeholder="Impact Level" FontSize="16" TextColor="Black" BackgroundColor="White" HorizontalOptions="FillAndExpand" />
+                    <Picker x:Name="frequencyPicker" Title="Frequency" FontSize="16" TextColor="Black" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Daily</x:String>
+                                <x:String>Weekly</x:String>
+                                <x:String>Monthly</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+
+                <!-- Save Button -->
+                <Button Text="Save" BackgroundColor="#2AA198" TextColor="White" CornerRadius="20" HorizontalOptions="FillAndExpand" Clicked="OnSaveButtonClicked" />
+
+                <!-- Display the saved input values below the save button -->
+                <StackLayout x:Name="savedInputsLayout" Padding="20" />
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
 
 </ContentPage>

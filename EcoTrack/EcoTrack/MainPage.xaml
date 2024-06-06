@@ -6,33 +6,31 @@
 
     <StackLayout Padding="20" BackgroundColor="#002b36">
         <!-- Header Section -->
-        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
-            <Image Source="user_avatar.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
             <StackLayout Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Center" Padding="10,0">
-                <Label Text="06 Jun, 2024" TextColor="White" FontSize="Small" />
-                <Label Text="Afternoon, Choki" TextColor="White" FontSize="Medium" />
+                <Label Text="06 Jun, 2024" TextColor="White" FontSize="16" />
+                <Label Text="Good Morning, User!" TextColor="White" FontSize="24" />
             </StackLayout>
             <Button ImageSource="menu_icon.png" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" />
         </StackLayout>
 
         <!-- Circular Progress Bar and CO2 Details -->
-        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Padding="50, 20">
             <local:CircularProgressBar x:Name="progressBar" Progress="0.0" WidthRequest="250" HeightRequest="250" />
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="CO₂" FontSize="Medium" TextColor="LightGreen" HorizontalOptions="Center" />
-                <Label x:Name="progressNumber" Text="0.0" FontSize="Large" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
-                <Label Text="So far this month" FontSize="Small" TextColor="LightGreen" HorizontalOptions="Center" />
+                <Label Text="CO₂" FontSize="24" TextColor="LightGreen" HorizontalOptions="Center" />
+                <Label x:Name="progressNumber" Text="0.0" FontSize="36" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <Label Text="So far this month" FontSize="16" TextColor="LightGreen" HorizontalOptions="Center" />
             </StackLayout>
         </Grid>
 
         <!-- Emission Details -->
         <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,20">
-            <Frame WidthRequest="150" HeightRequest="150" BackgroundColor="#073642" CornerRadius="10" Padding="10">
+            <Frame WidthRequest="130" HeightRequest="130" BackgroundColor="#073642" CornerRadius="10" Padding="10">
                 <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                     <Image Source="total_emissions_icon.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" />
-                    <Label Text="Total Emissions" FontSize="Small" TextColor="White" HorizontalOptions="Center" />
-                    <Label x:Name="totalEmissionsLabel" Text="0%" FontSize="Medium" TextColor="White" HorizontalOptions="Center" />
-                    <Label Text="5 kg" FontSize="Small" TextColor="LightGreen" HorizontalOptions="Center" />
+                    <Label Text="Total Emissions" FontSize="16" TextColor="White" HorizontalOptions="Center" />
+                    <Label x:Name="totalEmissionsLabel" Text="0%" FontSize="20" TextColor="White" HorizontalOptions="Center" />
                 </StackLayout>
             </Frame>
         </StackLayout>
@@ -45,8 +43,9 @@
             <Button Text="Learn" BackgroundColor="Transparent" TextColor="White" Clicked="OnLearnClicked" HorizontalOptions="FillAndExpand" />
             <Button Text="Impact" BackgroundColor="Transparent" TextColor="White" Clicked="OnImpactClicked" HorizontalOptions="FillAndExpand" />
         </StackLayout>
-   
+
     </StackLayout>
+
 
 
 

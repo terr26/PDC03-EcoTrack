@@ -20,29 +20,44 @@ namespace EcoTrack
         {
             InitializeComponent();
             Actions = new ObservableCollection<SustainableAction>();
-            LoadActionsAsync();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadSavedActions();
+        }
+
+        async Task LoadSavedActions()
+        {
+            var actions = await App.Database.GetActionsAsync();
+            foreach (var action in actions)
+            {
+                DisplaySavedInputs(action);
+                Actions.Add(action);
+            }
         }
 
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(descriptionEntry.Text) ||
-                string.IsNullOrWhiteSpace(categoryPicker.SelectedItem?.ToString()) ||
-                string.IsNullOrWhiteSpace(impactLevelEntry.Text) ||
-                string.IsNullOrWhiteSpace(frequencyPicker.SelectedItem?.ToString()))
+            if (string.IsNullOrEmpty(descriptionEntry.Text) || categoryPicker.SelectedIndex == -1 || string.IsNullOrEmpty(impactLevelEntry.Text) || frequencyPicker.SelectedIndex == -1)
             {
-                await DisplayAlert("Validation Error", "All fields must be filled.", "OK");
+                await DisplayAlert("Error", "Please fill in all fields", "OK");
                 return;
             }
+
+            var category = (string)categoryPicker.SelectedItem;
+            var frequency = (string)frequencyPicker.SelectedItem;
 
             if (editingAction != null)
             {
                 editingAction.Description = descriptionEntry.Text;
-                editingAction.Category = categoryPicker.SelectedItem.ToString();
+                editingAction.Category = category;
                 editingAction.ImpactLevel = impactLevelEntry.Text;
-                editingAction.Frequency = frequencyPicker.SelectedItem.ToString();
+                editingAction.Frequency = frequency;
 
                 await App.Database.SaveActionAsync(editingAction);
-                UpdateDisplayedInputs(editingStack, editingAction);
+                DisplaySavedInputs(editingAction, editingStack);
                 editingAction = null;
                 editingStack = null;
             }
@@ -50,11 +65,11 @@ namespace EcoTrack
             {
                 var action = new SustainableAction
                 {
-                    ActionCode = $"T{Actions.Count + 1:000}",
+                    ActionCode = $"T{Actions.Count + 1:D3}",
                     Description = descriptionEntry.Text,
-                    Category = categoryPicker.SelectedItem.ToString(),
+                    Category = category,
                     ImpactLevel = impactLevelEntry.Text,
-                    Frequency = frequencyPicker.SelectedItem.ToString()
+                    Frequency = frequency
                 };
 
                 await App.Database.SaveActionAsync(action);
@@ -65,29 +80,29 @@ namespace EcoTrack
             ClearForm();
         }
 
-        async void LoadActionsAsync()
+        void DisplaySavedInputs(SustainableAction action, StackLayout stack = null)
         {
-            var actions = await App.Database.GetActionsAsync();
-            foreach (var action in actions)
+            if (stack == null)
             {
-                DisplaySavedInputs(action);
+                stack = new StackLayout { Padding = new Thickness(0, 10) };
+                savedInputsLayout.Children.Add(stack);
             }
-        }
+            else
+            {
+                stack.Children.Clear();
+            }
 
-        void DisplaySavedInputs(SustainableAction action)
-        {
-            var stack = new StackLayout { Padding = new Thickness(0, 10) };
-            stack.Children.Add(new Label { Text = $"Action Code: {action.ActionCode}" });
-            stack.Children.Add(new Label { Text = $"Description: {action.Description}" });
-            stack.Children.Add(new Label { Text = $"Category: {action.Category}" });
-            stack.Children.Add(new Label { Text = $"Impact Level: {action.ImpactLevel}" });
-            stack.Children.Add(new Label { Text = $"Frequency: {action.Frequency}" });
+            stack.Children.Add(new Label { Text = $"Action Code: {action.ActionCode}", TextColor = Color.White });
+            stack.Children.Add(new Label { Text = $"Description: {action.Description}", TextColor = Color.White });
+            stack.Children.Add(new Label { Text = $"Category: {action.Category}", TextColor = Color.White });
+            stack.Children.Add(new Label { Text = $"Impact Level: {action.ImpactLevel}", TextColor = Color.White });
+            stack.Children.Add(new Label { Text = $"Frequency: {action.Frequency}", TextColor = Color.White });
 
-            var editButton = new Button { Text = "Edit" };
+            var editButton = new Button { Text = "Edit", BackgroundColor = Color.FromHex("#2AA198"), TextColor = Color.White, CornerRadius = 20, HorizontalOptions = LayoutOptions.FillAndExpand };
             editButton.Clicked += (s, e) => EditAction(action, stack);
             stack.Children.Add(editButton);
 
-            var deleteButton = new Button { Text = "Delete" };
+            var deleteButton = new Button { Text = "Delete", BackgroundColor = Color.FromHex("#2AA198"), TextColor = Color.White, CornerRadius = 20, HorizontalOptions = LayoutOptions.FillAndExpand };
             deleteButton.Clicked += async (s, e) =>
             {
                 Actions.Remove(action);
@@ -95,8 +110,6 @@ namespace EcoTrack
                 savedInputsLayout.Children.Remove(stack);
             };
             stack.Children.Add(deleteButton);
-
-            savedInputsLayout.Children.Add(stack);
         }
 
         void EditAction(SustainableAction action, StackLayout stack)
@@ -110,36 +123,12 @@ namespace EcoTrack
             editingStack = stack;
         }
 
-        void UpdateDisplayedInputs(StackLayout stack, SustainableAction action)
-        {
-            stack.Children.Clear();
-            stack.Children.Add(new Label { Text = $"Action Code: {action.ActionCode}" });
-            stack.Children.Add(new Label { Text = $"Description: {action.Description}" });
-            stack.Children.Add(new Label { Text = $"Category: {action.Category}" });
-            stack.Children.Add(new Label { Text = $"Impact Level: {action.ImpactLevel}" });
-            stack.Children.Add(new Label { Text = $"Frequency: {action.Frequency}" });
-
-            var editButton = new Button { Text = "Edit" };
-            editButton.Clicked += (s, e) => EditAction(action, stack);
-            stack.Children.Add(editButton);
-
-            var deleteButton = new Button { Text = "Delete" };
-            deleteButton.Clicked += async (s, e) =>
-            {
-                Actions.Remove(action);
-                await App.Database.DeleteActionAsync(action);
-                savedInputsLayout.Children.Remove(stack);
-            };
-            stack.Children.Add(deleteButton);
-        }
-
         void ClearForm()
         {
-            actionCodeEntry.Text = string.Empty;
             descriptionEntry.Text = string.Empty;
-            categoryPicker.SelectedItem = null;
+            categoryPicker.SelectedIndex = -1;
             impactLevelEntry.Text = string.Empty;
-            frequencyPicker.SelectedItem = null;
+            frequencyPicker.SelectedIndex = -1;
         }
     }
 }
