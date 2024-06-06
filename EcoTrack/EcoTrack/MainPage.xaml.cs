@@ -18,7 +18,7 @@ namespace EcoTrack
 
         async void InitializeAsync()
         {
-            await UpdateEmissionsAsync();
+            await ResetEmissionsAsync();
         }
 
         async void OnRecordEmissionClicked(object sender, EventArgs e)
@@ -42,12 +42,23 @@ namespace EcoTrack
             await UpdateEmissionsAsync();
         }
 
+        async Task ResetEmissionsAsync()
+        {
+            // Delete all actions to reset emissions
+            var actions = await App.Database.GetActionsAsync();
+            foreach (var action in actions)
+            {
+                await App.Database.DeleteActionAsync(action);
+            }
+            await UpdateEmissionsAsync();
+        }
+
         async Task UpdateEmissionsAsync()
         {
             var actions = await App.Database.GetActionsAsync();
             double totalEmissions = actions.Sum(a => double.TryParse(a.ImpactLevel, out double impact) ? impact : 0.0);
-            totalEmissionsLabel.Text = $"You have emitted {totalEmissions:0.000} kg CO2 this month";
-            progressNumber.Text = $"{totalEmissions:0.000}";
+            totalEmissionsLabel.Text = $"You have emitted {totalEmissions:0.00} kg CO2 this month";
+            progressNumber.Text = $"{totalEmissions:0.00}";
             progressBar.Progress = totalEmissions / 100; // Assuming 100 kg CO2 is the goal for the month
         }
     }
