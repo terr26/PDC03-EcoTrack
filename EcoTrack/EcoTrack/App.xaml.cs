@@ -12,7 +12,9 @@ namespace EcoTrack
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+
+            // Set WelcomePage as the initial page
+            MainPage = new NavigationPage(new WelcomePage());
         }
 
         public static Database Database

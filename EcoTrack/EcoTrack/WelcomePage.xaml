@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.WelcomePage"
+             BackgroundColor="#E6F4F1">
+
+    <StackLayout VerticalOptions="CenterAndExpand" Padding="20">
+        <!-- Image Section -->
+        <Image Source="welcome_image.png" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="200" HeightRequest="200"/>
+
+        <!-- Welcome Text Section -->
+        <Label Text="Welcome to EcoTrack" FontSize="24" TextColor="Black" HorizontalOptions="Center" Margin="0,20,0,10"/>
+        <Label Text="A mobile application designed to promote sustainable transportation habits by providing users with actionable information, measurable impact data, and engaging, interactive elements." FontSize="16" TextColor="Black" HorizontalOptions="Center" HorizontalTextAlignment="Center" Margin="0,0,0,10"/>
+        <Label Text="The app aims to guide users towards adopting low- and zero-emission, energy-efficient transportation methods such as electric and alternative-fuel vehicles. By making sustainable transportation practices accessible and engaging, GreenGo helps users contribute to reducing carbon emissions and fostering a cleaner environment.
+" FontSize="16" TextColor="Black" HorizontalOptions="Center" HorizontalTextAlignment="Center" Margin="0,0,0,20"/>
+
+        <!-- Button Section -->
+        <Button Text="Let's go" BackgroundColor="#2AA198" TextColor="White" CornerRadius="20" HorizontalOptions="FillAndExpand" Clicked="OnLetsGoButtonClicked"/>
+    </StackLayout>
+
+</ContentPage>

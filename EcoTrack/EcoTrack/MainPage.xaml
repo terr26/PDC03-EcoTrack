@@ -28,7 +28,6 @@
         <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,20">
             <Frame WidthRequest="130" HeightRequest="130" BackgroundColor="#073642" CornerRadius="10" Padding="10">
                 <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <Image Source="total_emissions_icon.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" />
                     <Label Text="Total Emissions" FontSize="16" TextColor="White" HorizontalOptions="Center" />
                     <Label x:Name="totalEmissionsLabel" Text="0%" FontSize="20" TextColor="White" HorizontalOptions="Center" />
                 </StackLayout>
