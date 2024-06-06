@@ -12,59 +12,46 @@ namespace EcoTrack
 {
     public partial class LearnPage : ContentPage
     {
-        public ObservableCollection<ForumPost> ForumPosts { get; set; }
-        ForumPost editingPost = null;
+        public ObservableCollection<Article> Articles { get; set; }
 
         public LearnPage()
         {
             InitializeComponent();
-            ForumPosts = new ObservableCollection<ForumPost>();
-            forumListView.ItemsSource = ForumPosts;
-        }
 
-        void OnSubmitClicked(object sender, EventArgs e)
-        {
-            if (editingPost != null)
+            Articles = new ObservableCollection<Article>
             {
-                editingPost.Content = forumEditor.Text;
-                editingPost.Timestamp = DateTime.Now;
-                forumListView.ItemsSource = null;
-                forumListView.ItemsSource = ForumPosts;
-                editingPost = null;
-                forumEditor.Text = string.Empty;
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(forumEditor.Text))
-            {
-                ForumPosts.Add(new ForumPost
+                new Article
                 {
-                    User = "User",
-                    Content = forumEditor.Text,
-                    Timestamp = DateTime.Now
-                });
-                forumEditor.Text = string.Empty;
-            }
-        }
+                    Title = "Engage Your Employees in Sustainability This Earth Month",
+                    Description = "Earth Month occurs in April every year, marking the month when Earth Day falls. Earth Month is a time to raise awareness about the...",
+                    TimeAgo = "about a year ago",
+                    ReadTime = "83 read"
+                },
+                new Article
+                {
+                    Title = "How to Make Sustainability Part of Your Company Culture",
+                    Description = "According to a recent survey of CEOs by the United Nations Global Compact and Accenture, 93% of CEOs see sustainability as important to...",
+                    TimeAgo = "about a year ago",
+                    ReadTime = "77 read"
+                },
+                new Article
+                {
+                    Title = "7 Sustainability Certifications to Consider for Your Business",
+                    Description = "As climate consciousness among employees grows, so does the interest in certification programs that validate sustainable practices...",
+                    TimeAgo = "about a year ago",
+                    ReadTime = "77 read"
+                }
+            };
 
-        void OnEditClicked(object sender, EventArgs e)
-        {
-            var post = (ForumPost)((Button)sender).CommandParameter;
-            forumEditor.Text = post.Content;
-            editingPost = post;
-        }
-
-        void OnDeleteClicked(object sender, EventArgs e)
-        {
-            var post = (ForumPost)((Button)sender).CommandParameter;
-            ForumPosts.Remove(post);
+            articlesListView.ItemsSource = Articles;
         }
     }
 
-    public class ForumPost
+    public class Article
     {
-        public string User { get; set; }
-        public string Content { get; set; }
-        public DateTime Timestamp { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string TimeAgo { get; set; }
+        public string ReadTime { get; set; }
     }
 }

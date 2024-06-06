@@ -1,38 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EcoTrack.LearnPage">
+             x:Class="EcoTrack.LearnPage"
+             BackgroundColor="#E6F4F1">
 
-    <StackLayout Padding="20">
-        <Label Text="Sustainable Transportation" FontSize="Large" HorizontalOptions="Center" />
-        <Label Text="Providing easy access to actionable information on sustainable practices." FontSize="Medium" HorizontalOptions="Center" />
+    <StackLayout VerticalOptions="FillAndExpand" Padding="20">
+        <!-- Header Section -->
+        <Label Text="The Latest From EcoTrack" FontSize="24" TextColor="Black" HorizontalOptions="Center" Margin="0,20,0,10"/>
+        <Label Text="Catch-up on your latest news and eco tips from EcoTrack." FontSize="16" TextColor="Black" HorizontalOptions="Center" HorizontalTextAlignment="Center" Margin="0,0,0,20"/>
 
-        <Editor x:Name="forumEditor" Placeholder="Share your thoughts or ask a question..." AutoSize="TextChanges" />
-        <Button Text="Submit" Clicked="OnSubmitClicked" />
+        <!-- Categories Section -->
+        <ScrollView Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Button Text="All" BackgroundColor="#2AA198" TextColor="White" CornerRadius="20" Margin="5"/>
+                <Button Text="Climate Foresight" BackgroundColor="#268BD2" TextColor="White" CornerRadius="20" Margin="5"/>
+                <Button Text="Sustainability at Work" BackgroundColor="#6C71C4" TextColor="White" CornerRadius="20" Margin="5"/>
+            </StackLayout>
+        </ScrollView>
 
-        <Label Text="Promote Public Transit: Encourage members to use buses, trains, and subways as alternative modes of transportation to reduce carbon emissions and alleviate traffic congestion. Provide schedules, route maps, and fare information for local public transit systems." />
-        <Label Text="Advocate for Cycling: Highlight the benefits of cycling for both personal health and the environment. Share tips on choosing a bike, maintaining it, and staying safe on the road. Provide resources for finding bike-friendly routes and trails in the area." />
-        <Label Text="Support Walking: Emphasize the importance of walking as a sustainable and healthy transportation option, especially for short trips. Share pedestrian-friendly routes, safety tips, and information about walkable neighborhoods." />
-        <Label Text="Encourage Carpooling and Ride-Sharing: Facilitate connections among members who are interested in carpooling or using ride-sharing services to reduce the number of vehicles on the road. Provide a platform for coordinating rides and sharing expenses." />
-        <Label Text="Highlight Electric Vehicles (EVs): Educate members about the environmental benefits of electric vehicles and the growing availability of EV charging infrastructure. Share information about incentives, rebates, and tax credits for purchasing or leasing electric cars." />
-        <Label Text="Promote Hybrid and Fuel-Efficient Vehicles: Provide resources for members interested in purchasing hybrid or fuel-efficient vehicles as a more environmentally friendly alternative to traditional gasoline-powered cars. Compare different models based on their fuel economy and environmental impact." />
-
-        <ListView x:Name="forumListView">
+        <!-- Articles Section -->
+        <ListView x:Name="articlesListView" HasUnevenRows="True" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding User}" FontAttributes="Bold" />
-                            <Label Text="{Binding Content}" />
-                            <Label Text="{Binding Timestamp, StringFormat='{0:dd MMM yyyy HH:mm}'}" FontSize="Small" />
-                            <Button Text="Edit" CommandParameter="{Binding .}" Clicked="OnEditClicked" />
-                            <Button Text="Delete" CommandParameter="{Binding .}" Clicked="OnDeleteClicked" />
-                        </StackLayout>
+                        <Frame BackgroundColor="#93C5FD" CornerRadius="20" Padding="15" Margin="0,10">
+                            <StackLayout>
+                                <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="{Binding Description}" FontSize="14" TextColor="White" Margin="0,5,0,10"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                    <Image Source="clock_icon.png" WidthRequest="16" HeightRequest="16" Margin="0,0,5,0"/>
+                                    <Label Text="{Binding TimeAgo}" FontSize="12" TextColor="White"/>
+                                    <Label Text="{Binding ReadTime}" FontSize="12" TextColor="White" Margin="5,0"/>
+                                    <Label Text="by EcoTrack" FontSize="12" TextColor="White" Margin="5,0"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
+
 
 
 </ContentPage>
