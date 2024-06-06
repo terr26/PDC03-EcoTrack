@@ -17,7 +17,7 @@
         <Label Text="Highlight Electric Vehicles (EVs): Educate members about the environmental benefits of electric vehicles and the growing availability of EV charging infrastructure. Share information about incentives, rebates, and tax credits for purchasing or leasing electric cars." />
         <Label Text="Promote Hybrid and Fuel-Efficient Vehicles: Provide resources for members interested in purchasing hybrid or fuel-efficient vehicles as a more environmentally friendly alternative to traditional gasoline-powered cars. Compare different models based on their fuel economy and environmental impact." />
 
-        <ListView x:Name="forumListView" ItemTapped="OnForumPostTapped">
+        <ListView x:Name="forumListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
