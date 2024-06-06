@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EcoTrack"
+             x:Class="EcoTrack.MainPage">
+
+    <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        <!-- App name and welcome message -->
+        <Label Text="EcoTrack" FontSize="Large" HorizontalOptions="Center" />
+        <Label Text="Hi, User!" FontSize="Medium" HorizontalOptions="Center" />
+        <Label x:Name="totalEmissionsLabel" Text="You have emitted 0.0 kg CO2 this month" FontSize="Medium" HorizontalOptions="Center" />
+
+        <!-- Circular Progress Bar with inner text -->
+        <AbsoluteLayout WidthRequest="300" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center">
+            <local:CircularProgressBar x:Name="progressBar" Progress="0.0" WidthRequest="300" HeightRequest="300" />
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <Label x:Name="progressNumber" Text="0.0" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="kg CO2" FontSize="Small" HorizontalOptions="Center" />
+                <Label Text="So far this month" FontSize="Small" HorizontalOptions="Center" />
+            </StackLayout>
+        </AbsoluteLayout>
+
+        <!-- Action Buttons -->
+        <Button Text="Record Emission +" Clicked="OnRecordEmissionClicked" />
+        <Button Text="Learn" Clicked="OnLearnClicked" />
+        <Button Text="Impact" Clicked="OnImpactClicked" />
+    </StackLayout>
+
+
+</ContentPage>

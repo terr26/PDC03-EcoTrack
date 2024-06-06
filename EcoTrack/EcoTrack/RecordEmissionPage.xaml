@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.RecordEmissionPage">
+    
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Entry x:Name="actionCodeEntry" Placeholder="Action Code" />
+            <Entry x:Name="descriptionEntry" Placeholder="Description" />
+            <Entry x:Name="categoryEntry" Placeholder="Category" />
+            <Entry x:Name="impactLevelEntry" Placeholder="Impact Level" />
+            <Entry x:Name="frequencyEntry" Placeholder="Frequency" />
+            <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
