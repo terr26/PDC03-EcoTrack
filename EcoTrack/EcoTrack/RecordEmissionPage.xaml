@@ -13,7 +13,6 @@
             <Picker x:Name="categoryPicker" Title="Category">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
-                        <x:String>Walking</x:String>
                         <x:String>Public Transport</x:String>
                         <x:String>Carpooling</x:String>
                         <x:String>Electric Vehicles</x:String>

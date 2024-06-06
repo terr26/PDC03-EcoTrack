@@ -48,10 +48,9 @@ namespace EcoTrack
             }
             else
             {
-                var actionCode = await GenerateNextActionCodeAsync();
                 var action = new SustainableAction
                 {
-                    ActionCode = actionCode,
+                    ActionCode = $"T{Actions.Count + 1:000}",
                     Description = descriptionEntry.Text,
                     Category = categoryPicker.SelectedItem.ToString(),
                     ImpactLevel = impactLevelEntry.Text,
@@ -60,19 +59,10 @@ namespace EcoTrack
 
                 await App.Database.SaveActionAsync(action);
                 DisplaySavedInputs(action);
+                Actions.Add(action);
             }
 
             ClearForm();
-        }
-
-        async Task<string> GenerateNextActionCodeAsync()
-        {
-            var actions = await App.Database.GetActionsAsync();
-            if (actions.Count == 0) return "T001";
-
-            var lastActionCode = actions.Max(a => a.ActionCode);
-            int lastNumber = int.Parse(lastActionCode.Substring(1));
-            return $"T{lastNumber + 1:D3}";
         }
 
         async void LoadActionsAsync()
@@ -87,15 +77,6 @@ namespace EcoTrack
         void DisplaySavedInputs(SustainableAction action)
         {
             var stack = new StackLayout { Padding = new Thickness(0, 10) };
-            UpdateDisplayedInputs(stack, action);
-
-            savedInputsLayout.Children.Add(stack);
-        }
-
-        void UpdateDisplayedInputs(StackLayout stack, SustainableAction action)
-        {
-            stack.Children.Clear();
-
             stack.Children.Add(new Label { Text = $"Action Code: {action.ActionCode}" });
             stack.Children.Add(new Label { Text = $"Description: {action.Description}" });
             stack.Children.Add(new Label { Text = $"Category: {action.Category}" });
@@ -109,15 +90,17 @@ namespace EcoTrack
             var deleteButton = new Button { Text = "Delete" };
             deleteButton.Clicked += async (s, e) =>
             {
+                Actions.Remove(action);
                 await App.Database.DeleteActionAsync(action);
                 savedInputsLayout.Children.Remove(stack);
             };
             stack.Children.Add(deleteButton);
+
+            savedInputsLayout.Children.Add(stack);
         }
 
         void EditAction(SustainableAction action, StackLayout stack)
         {
-            actionCodeEntry.Text = action.ActionCode;
             descriptionEntry.Text = action.Description;
             categoryPicker.SelectedItem = action.Category;
             impactLevelEntry.Text = action.ImpactLevel;
@@ -125,6 +108,29 @@ namespace EcoTrack
 
             editingAction = action;
             editingStack = stack;
+        }
+
+        void UpdateDisplayedInputs(StackLayout stack, SustainableAction action)
+        {
+            stack.Children.Clear();
+            stack.Children.Add(new Label { Text = $"Action Code: {action.ActionCode}" });
+            stack.Children.Add(new Label { Text = $"Description: {action.Description}" });
+            stack.Children.Add(new Label { Text = $"Category: {action.Category}" });
+            stack.Children.Add(new Label { Text = $"Impact Level: {action.ImpactLevel}" });
+            stack.Children.Add(new Label { Text = $"Frequency: {action.Frequency}" });
+
+            var editButton = new Button { Text = "Edit" };
+            editButton.Clicked += (s, e) => EditAction(action, stack);
+            stack.Children.Add(editButton);
+
+            var deleteButton = new Button { Text = "Delete" };
+            deleteButton.Clicked += async (s, e) =>
+            {
+                Actions.Remove(action);
+                await App.Database.DeleteActionAsync(action);
+                savedInputsLayout.Children.Remove(stack);
+            };
+            stack.Children.Add(deleteButton);
         }
 
         void ClearForm()

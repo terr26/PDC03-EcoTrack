@@ -4,27 +4,52 @@
              xmlns:local="clr-namespace:EcoTrack"
              x:Class="EcoTrack.MainPage">
 
-    <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-        <!-- App name and welcome message -->
-        <Label Text="EcoTrack" FontSize="Large" HorizontalOptions="Center" />
-        <Label Text="Hi, User!" FontSize="Medium" HorizontalOptions="Center" />
-        <Label x:Name="totalEmissionsLabel" Text="You have emitted 0.0 kg CO2 this month" FontSize="Medium" HorizontalOptions="Center" />
-
-        <!-- Circular Progress Bar with inner text -->
-        <AbsoluteLayout WidthRequest="300" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center">
-            <local:CircularProgressBar x:Name="progressBar" Progress="0.0" WidthRequest="300" HeightRequest="300" />
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" AbsoluteLayout.LayoutBounds="0.5, 0.5, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional">
-                <Label x:Name="progressNumber" Text="0.0" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" />
-                <Label Text="kg CO2" FontSize="Small" HorizontalOptions="Center" />
-                <Label Text="So far this month" FontSize="Small" HorizontalOptions="Center" />
+    <StackLayout Padding="20" BackgroundColor="#002b36">
+        <!-- Header Section -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
+            <Image Source="user_avatar.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" />
+            <StackLayout Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Center" Padding="10,0">
+                <Label Text="06 Jun, 2024" TextColor="White" FontSize="Small" />
+                <Label Text="Afternoon, Choki" TextColor="White" FontSize="Medium" />
             </StackLayout>
-        </AbsoluteLayout>
+            <Button ImageSource="menu_icon.png" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" />
+        </StackLayout>
 
-        <!-- Action Buttons -->
-        <Button Text="Record Emission +" Clicked="OnRecordEmissionClicked" />
-        <Button Text="Learn" Clicked="OnLearnClicked" />
-        <Button Text="Impact" Clicked="OnImpactClicked" />
+        <!-- Circular Progress Bar and CO2 Details -->
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <local:CircularProgressBar x:Name="progressBar" Progress="0.0" WidthRequest="250" HeightRequest="250" />
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="CO₂" FontSize="Medium" TextColor="LightGreen" HorizontalOptions="Center" />
+                <Label x:Name="progressNumber" Text="0.0" FontSize="Large" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <Label Text="So far this month" FontSize="Small" TextColor="LightGreen" HorizontalOptions="Center" />
+            </StackLayout>
+        </Grid>
+
+        <!-- Emission Details -->
+        <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,20">
+            <Frame WidthRequest="150" HeightRequest="150" BackgroundColor="#073642" CornerRadius="10" Padding="10">
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Image Source="total_emissions_icon.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" />
+                    <Label Text="Total Emissions" FontSize="Small" TextColor="White" HorizontalOptions="Center" />
+                    <Label x:Name="totalEmissionsLabel" Text="0%" FontSize="Medium" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="5 kg" FontSize="Small" TextColor="LightGreen" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+
+        <!-- Record Emission Button -->
+        <Button Text="Record Emission +" BackgroundColor="#2AA198" TextColor="White" CornerRadius="20" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Clicked="OnRecordEmissionClicked" />
+
+        <!-- Learn and Impact Buttons -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="10,5">
+            <Button Text="Learn" BackgroundColor="Transparent" TextColor="White" Clicked="OnLearnClicked" HorizontalOptions="FillAndExpand" />
+            <Button Text="Impact" BackgroundColor="Transparent" TextColor="White" Clicked="OnImpactClicked" HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+   
     </StackLayout>
+
+
+
 
 
 </ContentPage>
